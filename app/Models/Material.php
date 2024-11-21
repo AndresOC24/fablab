@@ -15,8 +15,13 @@ class Material extends Model
         'costo_adquisicion',
         'imagen',
         'cantidad',
+        'id_areas',
     ];
 
+    public function area()
+    {
+        return $this->belongsTo(areas::class, 'id_areas');
+    }
 
 }
 

@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\MaterialResource\Pages;
 use App\Filament\Resources\MaterialResource\RelationManagers;
+use App\Models\areas;
 use App\Models\Material;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -47,14 +48,19 @@ class MaterialResource extends Resource
                 Forms\Components\TextInput::make('costo_adquisicion')
                     ->required()
                     ->numeric(),
-                Forms\Components\FileUpload::make('imagen')
-                    ->image()
-                    ->directory('images')
-                    ->imageEditor(),
+                Forms\Components\Select::make('id_areas') // Campo para seleccionar el área
+                    ->label('Área')
+                    ->options(areas::query()->pluck('nombre', 'id')) // Carga las áreas de la base de datos
+                    ->searchable()
+                    ->required(),
                 Forms\Components\TextInput::make('cantidad')
                     ->required()
                     ->numeric()
                     ->default(0),
+                Forms\Components\FileUpload::make('imagen')
+                    ->image()
+                    ->directory('images')
+                    ->imageEditor(),
             ]);
     }
 
@@ -77,6 +83,9 @@ class MaterialResource extends Resource
                 Tables\Columns\TextColumn::make('cantidad')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('area.nombre') // Mostrar el nombre del área
+                    ->label('Área')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
