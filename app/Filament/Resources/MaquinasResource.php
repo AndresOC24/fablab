@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\AreasResource\Pages;
-use App\Filament\Resources\AreasResource\RelationManagers;
+use App\Filament\Resources\MaquinasResource\Pages;
+use App\Filament\Resources\MaquinasResource\RelationManagers;
 use App\Models\Area;
+use App\Models\Maquina;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,10 +13,11 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\FileUpload;
 
-class AreasResource extends Resource
+class MaquinasResource extends Resource
 {
-    protected static ?string $model = Area::class;
+    protected static ?string $model = Maquina::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -28,6 +30,22 @@ class AreasResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Textarea::make('descripcion')
                     ->columnSpanFull(),
+                Forms\Components\TextInput::make('modelo')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('numero_serie')
+                    ->maxLength(255),
+                Forms\Components\Select::make('id_areas')
+                    ->label('Área')
+                    ->options(\App\Models\Area::query()->pluck('nombre', 'id')) // Referencia al modelo correcto
+                    ->searchable()
+                    ->required(),
+                Forms\Components\TextInput::make('observaciones')
+                    ->maxLength(255)
+                    ->default('Ninguno'),
+                Forms\Components\FileUpload::make('imagen')
+                    ->image()
+                    ->directory('images')
+                    ->imageEditor(),
             ]);
     }
 
@@ -37,8 +55,18 @@ class AreasResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('descripcion')
+                Tables\Columns\TextColumn::make('modelo')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('numero_serie')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('area.nombre') // Mostrar el nombre del área
+                    ->label('Área')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('observaciones')
+                    ->searchable(),
+                Tables\Columns\ImageColumn::make('imagen')
+                    ->circular(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -71,9 +99,9 @@ class AreasResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAreas::route('/'),
-            'create' => Pages\CreateAreas::route('/create'),
-            'edit' => Pages\EditAreas::route('/{record}/edit'),
+            'index' => Pages\ListMaquinas::route('/'),
+            'create' => Pages\CreateMaquinas::route('/create'),
+            'edit' => Pages\EditMaquinas::route('/{record}/edit'),
         ];
     }
 }
