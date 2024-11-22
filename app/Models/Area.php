@@ -15,4 +15,10 @@ class Area extends Model
     {
         return $this->hasMany(Maquina::class, 'id_areas');
     }
+
+    public function voluntarios()
+    {
+        return $this->belongsToMany(Voluntario::class, 'area_voluntario', 'area_id', 'voluntario_id');
+    }
+
 }

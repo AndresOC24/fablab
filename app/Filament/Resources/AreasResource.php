@@ -26,6 +26,11 @@ class AreasResource extends Resource
                 Forms\Components\TextInput::make('nombre')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Select::make('voluntarios')
+                    ->label('Encargados')
+                    ->relationship('voluntarios', 'nombre') // Relación con voluntarios
+                    ->multiple() // Permitir múltiples voluntarios
+                    ->searchable(),
                 Forms\Components\Textarea::make('descripcion')
                     ->columnSpanFull(),
             ]);
@@ -37,6 +42,11 @@ class AreasResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('voluntarios')
+                    ->label('Encargados')
+                    ->formatStateUsing(function ($record) {
+                        return $record->voluntarios->pluck('nombre')->join(', ');
+                    }),
                 Tables\Columns\TextColumn::make('descripcion')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
