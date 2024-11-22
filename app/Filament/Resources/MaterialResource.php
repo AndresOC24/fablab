@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\MaterialResource\Pages;
 use App\Filament\Resources\MaterialResource\RelationManagers;
-use App\Models\areas;
+use App\Models\Area;
 use App\Models\Material;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -50,7 +50,7 @@ class MaterialResource extends Resource
                     ->numeric(),
                 Forms\Components\Select::make('id_areas') // Campo para seleccionar el área
                     ->label('Área')
-                    ->options(areas::query()->pluck('nombre', 'id')) // Carga las áreas de la base de datos
+                    ->options(Area::query()->pluck('nombre', 'id')) // Carga las áreas de la base de datos
                     ->searchable()
                     ->required(),
                 Forms\Components\TextInput::make('cantidad')

@@ -5,10 +5,23 @@
 ## Sobre el Proyecto
 El proyecto es un sistema de inventario desarrollado con [Filament](https://filamentphp.com/) y [Laravel](https://laravel.com/) para el laboratorio de [FabLab](https://fablabscz.org/) en la Universidad Privada Franz Tamayo, [UNIFRANZ](https://unifranz.edu.bo/).
 
+## Herramientas
+* PhpMyAdmin 
+* Laragon
+* Laravel
+* PHP
+* Filament
+
+## Versiones de herramientas utilizadas
+* Laravel Framework 11.32.0
+* PHP 8.3.10
+* Filament 3.2
+
 ## Modulos del Sistema
 * Gestión de usuarios
 * Gestión de Materiales
 * Gestión de áreas
+* Gestión de máquinas
 
-### ¿Cómo ejecutar el sistema?
-Proximamente
+
+

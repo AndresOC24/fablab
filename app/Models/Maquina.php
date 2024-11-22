@@ -4,25 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Material extends Model
+class Maquina extends Model
 {
     protected $fillable = [
         'nombre',
         'descripcion',
         'modelo',
-        'estado',
+        'numero_serie',
+        'id_areas', // Relación con áreas
         'observaciones',
-        'costo_adquisicion',
         'imagen',
-        'cantidad',
-        'id_areas',
     ];
 
     public function area()
     {
         return $this->belongsTo(Area::class, 'id_areas');
     }
-
 }
-
-
