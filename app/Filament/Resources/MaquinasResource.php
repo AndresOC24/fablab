@@ -19,17 +19,16 @@ class MaquinasResource extends Resource
 {
     protected static ?string $model = Maquina::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-rectangle-group';
 
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(2)
             ->schema([
                 Forms\Components\TextInput::make('nombre')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('descripcion')
-                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('modelo')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('numero_serie')
@@ -46,6 +45,8 @@ class MaquinasResource extends Resource
                     ->image()
                     ->directory('images')
                     ->imageEditor(),
+                Forms\Components\Textarea::make('descripcion')
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -63,15 +64,19 @@ class MaquinasResource extends Resource
                     ->label('Área')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('observaciones')
-                    ->searchable(),
                 Tables\Columns\ImageColumn::make('imagen')
-                    ->circular(),
+                    ->circular()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('observaciones')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Creado')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Actualizado')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

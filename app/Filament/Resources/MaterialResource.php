@@ -20,17 +20,21 @@ class MaterialResource extends Resource
 {
     protected static ?string $model = Material::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getPluralLabel(): string
+    {
+        return 'Materiales';
+    }
+
+    protected static ?string $navigationIcon = 'heroicon-m-archive-box-arrow-down';
 
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(2)
             ->schema([
                 Forms\Components\TextInput::make('nombre')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('descripcion')
-                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('modelo')
                     ->maxLength(255),
                 Forms\Components\Select::make('estado')
@@ -61,6 +65,8 @@ class MaterialResource extends Resource
                     ->image()
                     ->directory('images')
                     ->imageEditor(),
+                Forms\Components\Textarea::make('descripcion')
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -69,28 +75,49 @@ class MaterialResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')
+                    ->alignCenter()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('modelo')
+                    ->alignCenter()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('estado'),
-                Tables\Columns\TextColumn::make('observaciones')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('estado')
+                    ->alignCenter()
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Disponible' => 'success',
+                        'Agotado' => 'danger',
+                    }),
                 Tables\Columns\TextColumn::make('costo_adquisicion')
+                    ->alignCenter()
+                    ->numeric()
+                    ->wrapHeader()
+                    ->label('Costo')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('cantidad')
+                    ->alignCenter()
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\ImageColumn::make('imagen')
+                    ->alignCenter()
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->circular(),
-                Tables\Columns\TextColumn::make('cantidad')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('observaciones')
+                    ->alignCenter()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('area.nombre') // Mostrar el nombre del área
+                    ->alignCenter()
                     ->label('Área')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->alignCenter()
+                    ->label('Creado')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->alignCenter()
+                    ->label('Actualizado')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -18,7 +18,7 @@ class VoluntarioResource extends Resource
 {
     protected static ?string $model = Voluntario::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-user-group';
 
     public static function form(Form $form): Form
     {
@@ -41,7 +41,7 @@ class VoluntarioResource extends Resource
                 ->required(),
             Forms\Components\TextInput::make('email')
                 ->email()
-                ->required()
+                // ->required()
                 ->rules(function ($record) {
                     return [
                         Rule::unique('voluntarios', 'email')->ignore($record?->id),
@@ -56,6 +56,7 @@ class VoluntarioResource extends Resource
                 ->label('Estado')
                 ->required(),
             Forms\Components\TextInput::make('telefono')
+                ->required()
                 ->maxLength(20),
             Forms\Components\TextInput::make('universidad')
                 ->maxLength(255),
@@ -69,31 +70,48 @@ class VoluntarioResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('apellido')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('ci')
-                ->label('CI')
-                ->searchable(),
+                    ->label('CI')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('fecha_nacimiento')
                     ->date()
-                    ->label('Fecha de Nacimiento'),
+                    ->label('Nacimiento')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('email')
                     ->label('Correo Electrónico')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('telefono')
+                    ->label('Teléfono')
+                    ->words(8)
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('universidad')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('estado')
                     ->label('Estado')
+                    ->badge()
                     ->formatStateUsing(function ($state) {
                         return $state ? 'Activo' : 'Inactivo';
                     })
-                    ->colors([
-                        'success' => true, // Verde para activo
-                        'danger' => false, // Rojo para inactivo
-                    ]),
-                Tables\Columns\TextColumn::make('telefono')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('universidad')
-                    ->searchable(),
+                    ->color(function ($state) {
+                        return $state ? 'success' : 'danger';
+                    }),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Creado')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Actualizado')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

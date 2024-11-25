@@ -26,12 +26,21 @@ class DashboardPanelProvider extends PanelProvider
             ->default()
             ->id('dashboard')
             ->path('dashboard')
+            ->resources([
+                \App\Filament\Resources\AreasResource::class,
+                \App\Filament\Resources\MaquinasResource::class,
+                \App\Filament\Resources\MaterialResource::class,
+                \App\Filament\Resources\VoluntarioResource::class,
+                \App\Filament\Resources\UserResource::class,
+            ])
             ->login()
+            // ->brandLogo(asset('images/FabLab_logo.png'))
+            // ->darkModeBrandLogo(asset('images/FabLab_logo.png'))
+            ->favicon(asset('images/favicon.ico'))
             ->colors([
                 'primary' => Color::Violet,
                 'gray' => Color::Slate,
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
@@ -39,7 +48,6 @@ class DashboardPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

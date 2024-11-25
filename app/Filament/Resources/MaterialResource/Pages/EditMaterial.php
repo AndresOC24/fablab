@@ -16,4 +16,10 @@ class EditMaterial extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index'); // Redirige al listado de voluntarios
+    }
+
 }

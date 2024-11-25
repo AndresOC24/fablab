@@ -9,4 +9,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateMaquinas extends CreateRecord
 {
     protected static string $resource = MaquinasResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index'); // Redirige al listado de voluntarios
+    }
 }

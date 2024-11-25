@@ -17,7 +17,7 @@ class AreasResource extends Resource
 {
     protected static ?string $model = Area::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-m-bookmark-square';
 
     public static function form(Form $form): Form
     {
@@ -48,12 +48,15 @@ class AreasResource extends Resource
                         return $record->voluntarios->pluck('nombre')->join(', ');
                     }),
                 Tables\Columns\TextColumn::make('descripcion')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Creado')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Actualizado')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
