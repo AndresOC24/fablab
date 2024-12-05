@@ -22,6 +22,7 @@ El proyecto es un sistema de inventario desarrollado con [Filament](https://fila
 * Gestión de Materiales
 * Gestión de áreas
 * Gestión de máquinas
+* Gestión de Voluntarios
 
 ## Proceso de instalación del Sistema
 ### Paso 1
@@ -30,8 +31,8 @@ Debes de clonar el repositorio en la carpeta donde tengas almacenandos tus proye
 Para ello ejecuta el comando de `git clone https://github.com/AndresOC24/fablab.git`, y procedera a copiar todo el proyecto en la ruta que indicaste.
 
 ### Paso 2
-Debemos de configurar nuestra conexión con la Base de datos de preferencia, lo hacemos desde el archivo `.env`. Normalmente se configura en el siguiente apartado:
-<img src="/database/image.png" width="100" heigth="100" alt="Configuración .env">
+Debemos de configurar nuestra conexión con la Base de datos de preferencia, lo hacemos desde el archivo `.env`. Normalmente se configura en el siguiente apartado: <br>
+<img src="/database/image.png" width="350" heigth="350" alt="Configuración .env">
 
 Y en la parte de `APP_URL=`, debes de ponerle `http://127.0.0.1:8000` para que se ejecute en tu entorno local cuando ejecutes el servidor.
 
@@ -45,7 +46,7 @@ Debemos de ejecutar las migraciones junto a los seeders, para ello ejecutamos el
 
 Una vez hayamos hecho eso, ya podremos acceder al sistema ejecutando `php artisan serve` y las credenciales de acceso por defecto son las siguientes:
 
-Email:`admin@admin.com`
+Email:`admin@admin.com`<br>
 Contraseña:`admin`
 
 
