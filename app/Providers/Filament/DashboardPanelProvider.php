@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\PrestamosResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -31,6 +32,7 @@ class DashboardPanelProvider extends PanelProvider
                 \App\Filament\Resources\MaquinasResource::class,
                 \App\Filament\Resources\MaterialResource::class,
                 \App\Filament\Resources\VoluntarioResource::class,
+                \App\Filament\Resources\PrestamosResource::class,
                 \App\Filament\Resources\UserResource::class,
             ])
             ->login()
